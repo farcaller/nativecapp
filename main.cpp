@@ -27,7 +27,6 @@
 #include <QSettings>
 #include <QDebug>
 #include "webwindow.h"
-#include "site.h"
 
 enum Options {
 	OPT_NOOPTION,
