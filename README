@@ -1,0 +1,23 @@
+NativeCapp is an attempt to make a better approach to running Cappuccino alongside the native OS applications.
+
+To build NativeCapp you must have Qt 4.7, a beta release.
+
+NativeCapp supports minimal command line options:
+ -d enables debug mode (index-debug.html is the default target, web inspector
+    is enabled)
+ -a <APP_INDEX> allows you to run arbitrary html file as the NativeCapp target
+
+By default NativeCapp expects you to bundle the Cappuccino application and the
+framework into Qt resourse bundle (i.e. without any options NativeCapp loads
+qrc:/index.html or qrc:/index-debug.html if debug is enabled). To simplify
+the process of packing Cappuccino and application code you can use makeqrc.py
+script. It's syntax is pretty straightforward:
+
+  ./makeqrc.py /path/to/directory/where/index.html/resides output.qrc
+
+Don't forget to modify NativeCapp.pro by adding the following line:
+
+  RESOURCES += output.qrc
+
+The software is in very early stages, so expect it to be broken, features
+appearing and disappearing and other strange issues. Your feedback is welcome.
