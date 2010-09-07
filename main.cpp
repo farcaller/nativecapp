@@ -23,22 +23,69 @@
 *****************************************************************************/
 
 #include <QtGui/QApplication>
-#include <QtCore/QUrl>
+#include <QUrl>
+#include <QSettings>
 #include <QDebug>
 #include "webwindow.h"
 #include "site.h"
 
+enum Options {
+	OPT_NOOPTION,
+	OPT_APPPATH,
+};
+
+bool Debug;
+
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	a.setOrganizationName("Hack&Dev");
+	a.setApplicationName("NativeCapp");
 	
-	QUrl resolvedSite = SITE_ROOT_DEBUG;
+	Debug = false;
+	Options options = OPT_NOOPTION;
+	QUrl resolvedSite = QUrl();
+	bool dontCareAboutAppName = true;
 	
-	qDebug() << "Site index: " << resolvedSite;
+	// I hate parsing arguments in anything other than python >_<
+	foreach(QString s, a.arguments()) {
+		if(dontCareAboutAppName) {
+			dontCareAboutAppName = false;
+			continue;
+		}
+		if(options != OPT_NOOPTION) {
+			switch (options) {
+				case OPT_APPPATH:
+					resolvedSite = QUrl("file://" + s);
+					break;
+				default:
+					break;
+			}
+			options = OPT_NOOPTION;
+		} else if(s == "-d") {
+			Debug = true;
+		} else if(s == "-a") {
+			options = OPT_APPPATH;
+		} else
+			return 2;
+	}
+	if(options != OPT_NOOPTION)
+		return 2;
+	
+	if(resolvedSite.isEmpty()) {
+		if(Debug)
+			resolvedSite = QUrl("qrc:///index-debug.html");
+		else
+			resolvedSite = QUrl("qrc:///index.html");
+	}
+
+	qDebug() << "Site index:" << resolvedSite;
+	
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, Debug);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
 	
 	WebWindow rootWindow;
 	rootWindow.resize(800, 600);
-	rootWindow.setDebug(true);
 	rootWindow.setBaseUrl(resolvedSite);
 	rootWindow.show();
 	

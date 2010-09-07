@@ -31,23 +31,11 @@ WebWindow::WebWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 	connect(ui->webView, SIGNAL(titleChanged(QString)), this, SLOT(setWindowTitle(QString)));
-	QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,true);
 }
 
 WebWindow::~WebWindow()
 {
 	delete ui;
-}
-
-void WebWindow::setDebug(bool aDebug)
-{
-	_debug = aDebug;
-	QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, _debug);
-}
-
-bool WebWindow::debug() const
-{
-	return _debug;
 }
 
 void WebWindow::setBaseUrl(QUrl url)

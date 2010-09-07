@@ -37,7 +37,6 @@ public:
 
 protected:
 	virtual void contextMenuEvent(QContextMenuEvent *event);
-	//virtual QWebView *createWindow(QWebPage::WebWindowType type);
 };
 
 #endif // WEBVIEW_H

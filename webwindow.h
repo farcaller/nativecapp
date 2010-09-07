@@ -36,23 +36,16 @@ namespace Ui {
 class WebWindow : public QWidget
 {
     Q_OBJECT
-	Q_PROPERTY(bool debug READ debug WRITE setDebug);
 	Q_PROPERTY(QUrl baseUrl READ baseUrl WRITE setBaseUrl);
 
 public:
     explicit WebWindow(QWidget *parent = 0);
     ~WebWindow();
 	
-	void setDebug(bool aDebug);
-	bool debug() const;
-	
 	void setBaseUrl(QUrl url);
 	QUrl baseUrl() const;
 	
 	QWebPage *webPage() const;
-
-//private slots:
-//	void onTitleChanged
 
 private:
     Ui::WebWindow *ui;

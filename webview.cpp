@@ -26,6 +26,8 @@
 #include "webpage.h"
 #include <qdebug.h>
 
+extern bool Debug;
+
 WebView::WebView(QWidget *parent)
 : QWebView(parent)
 {
@@ -40,12 +42,9 @@ WebView::~WebView()
 
 void WebView::contextMenuEvent(QContextMenuEvent *event)
 {
-	return;
+	if(Debug) {
+		// XXX: Don't show default menu items (back/reload) if we're not debugging
+		QWebView::contextMenuEvent(event);
+	}
+	// TODO: propagate to cappuccino so it could show any context menu
 }
-
-#if 0
-QWebView *WebView::createWindow(QWebPage::WebWindowType type)
-{
-
-}
-#endif
