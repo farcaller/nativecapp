@@ -1,0 +1,23 @@
+# xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+*.mode2v3
+
+# Qt/Qmake noise
+Info.plist
+*.xcodeproj
+*.app
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.rcc
+*.qrc
+
+# osx noise
+.DS_Store
+profile
+
+# other stuff
+.svn
+*.swp
